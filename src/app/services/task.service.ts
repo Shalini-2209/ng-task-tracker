@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, retryWhen } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { TASKS } from '../mock-tasks';
 import { Task } from '../Task';
@@ -34,5 +34,9 @@ export class TaskService {
   updateTaskReminder(task: Task): Observable<Task> {
     const url = `${this.apiUrl}/${task.id}`;
     return this.http.put<Task>(url, task, headerOptions);
+  }
+
+  addTask(newTask: Task): Observable<Task> {
+    return this.http.post<Task>(this.apiUrl, newTask, headerOptions);
   }
 }
